@@ -1,13 +1,9 @@
 class Solution:
     def backspaceCompare(self, s: str, t: str) -> bool:
-        def process(string):
-            stack = []
-            for ch in string:
-                if ch != "#":
-                    stack.append(ch)
-                elif stack:
-                    stack.pop()
-
-            return stack
-        return process(s) == process(t)
-        
+        def back(res, c):
+            if c != '#': 
+                res.append(c)
+            elif res: 
+                res.pop()
+            return res
+        return reduce(back, s, []) == reduce(back, t, [])
