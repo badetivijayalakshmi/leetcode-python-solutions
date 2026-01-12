@@ -1,7 +1,6 @@
 class Solution:
     def calculate(self, s: str) -> int:
         num = 0
-        res = 0
         pre_op = '+'
         s+='+'
         stack = []
