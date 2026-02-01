@@ -2,7 +2,7 @@ class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         from collections import deque
         q = deque() # stores *indices*
-        res = []
+        result = []
         for i, cur in enumerate(nums):
             while q and nums[q[-1]] <= cur:
                 q.pop()
@@ -10,5 +10,5 @@ class Solution:
             if q[0] == i - k:
                 q.popleft()
             if i >= k - 1:
-                res.append(nums[q[0]])
-        return res
+                result.append(nums[q[0]])
+        return result
