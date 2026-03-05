@@ -30,12 +30,7 @@ class Solution:
         first = head
         #Merge alternatively
         while second:
-            t1 = first.next
-            t2 = second.next
-
+            nextt = first.next
             first.next = second
-            second.next = t1
-
-            first = t1
-            second = t2
-        
+            first = second
+            second = nextt 
