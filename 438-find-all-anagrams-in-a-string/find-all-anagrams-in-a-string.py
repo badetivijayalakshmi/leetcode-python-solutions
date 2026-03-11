@@ -1,23 +1,19 @@
+from collections import Counter
 class Solution:
     def findAnagrams(self, s: str, p: str) -> List[int]:
-        hashmap = defaultdict(int)
-        sL = len(s)
-        pL = len(p)
+        count = Counter(p)
+        window = Counter()
         res = []
-        if pL > sL:
-            return []
-        for ch in p:
-            hashmap[ch] +=1
-        for i in range(pL-1):
-            if s[i] in hashmap:
-                hashmap[s[i]] -= 1
-        for i in range(-1,sL-pL+1):
-            if i > -1 and s[i] in hashmap:
-                hashmap[s[i]] += 1
-            if i+pL < sL and s[i+pL] in hashmap:
-                hashmap[s[i+pL]] -= 1
-            if all(v == 0 for v in hashmap.values()):#anagram check
-                res.append(i+1)
+        k = len(p)
+        for i in range(len(s)):
+            window[s[i]] += 1
+            if i >= k:
+                if window[s[i-k]] == 1:
+                    del window[s[i-k]]
+                else:
+                    window[s[i-k]] -= 1
+            if window == count:
+                res.append(i-k+1)
         return res   
 
         
