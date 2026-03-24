@@ -1,38 +1,25 @@
-from typing import List
-
 class Solution:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()   # Sort array
-        n = len(nums)
-        res = []      
-
-        for i in range(n - 2):
-            # Skip duplicate
-            if i > 0 and nums[i] == nums[i - 1]:
+    def threeSum(self, nums: list[int]) -> list[list[int]]:
+        nums.sort()
+        ans = []
+        for i in range(len(nums)-2):
+            if i > 0 and nums[i] == nums[i-1]:
                 continue
-
-            left, right = i + 1, n - 1
-            target = -nums[i]
-
-            while left < right:
-                s = nums[left] + nums[right]
-
-                if s == target:
-                    # Found a valid triplet
-                    res.append([nums[i], nums[left], nums[right]])
-                    left += 1
-                    right -= 1
-
-                    # Skip duplicates for left
-                    while left < right and nums[left] == nums[left - 1]:
-                        left += 1
-                    # Skip duplicates for right
-                    while left < right and nums[right] == nums[right + 1]:
-                        right -= 1
-
-                elif s < target:
-                    left += 1
+            l = i + 1
+            r = len(nums) - 1
+            while l < r:
+                total = nums[i] + nums[l] + nums[r]
+                if total == 0:
+                    ans.append([nums[i],nums[l],nums[r]])
+                    l += 1
+                    r -= 1
+                    while l < r and nums[l] == nums[l-1]:
+                        l += 1
+                    while l < r and nums[r] == nums[r+1]:
+                        r -= 1
+                elif total < 0:
+                    l += 1
                 else:
-                    right -= 1
-
-        return res
+                    r -= 1
+        return ans
+        
