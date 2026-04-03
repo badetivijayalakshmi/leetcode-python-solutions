@@ -1,29 +1,24 @@
-# Python
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
-        n = len(heights)
-        left, right = [-1]*n, [n]*n
-        stack = []
-
-        # Nearest Smaller to Left
-        for i in range(n):
-            while stack and heights[stack[-1]] >= heights[i]:
-                stack.pop()
-            left[i] = stack[-1] if stack else -1
-            stack.append(i)
-
-        stack.clear()
-
-        # Nearest Smaller to Right
-        for i in range(n-1, -1, -1):
-            while stack and heights[stack[-1]] >= heights[i]:
-                stack.pop()
-            right[i] = stack[-1] if stack else n
-            stack.append(i)
-
+        st = []
         max_area = 0
+        n = len(heights)
         for i in range(n):
-            width = right[i] - left[i] - 1
-            max_area = max(max_area, heights[i] * width)
+            while st and heights[st[-1]] > heights[i]:
+                h = heights[st.pop()]
+                if not st:
+                    w = i
+                else:
+                    w = i - st[-1] - 1
+                max_area = max(max_area, h*w)
 
+            st.append(i)
+        while st:
+            h = heights[st.pop()]
+            if not st:
+                w = n
+            else:
+                w = n - st[-1] - 1
+            max_area = max(max_area,h*w)
         return max_area
+
